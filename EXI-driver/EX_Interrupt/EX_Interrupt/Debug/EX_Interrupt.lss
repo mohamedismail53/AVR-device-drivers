@@ -1,0 +1,764 @@
+
+EX_Interrupt.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000440  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000004b4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          00000007  00800060  00800060  000004b4  2**0
+                  ALLOC
+  3 .comment      00000030  00000000  00000000  000004b4  2**0
+                  CONTENTS, READONLY
+  4 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000004e4  2**2
+                  CONTENTS, READONLY
+  5 .debug_aranges 000000d8  00000000  00000000  00000520  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_info   00000ca0  00000000  00000000  000005f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_abbrev 0000077d  00000000  00000000  00001298  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_line   00000774  00000000  00000000  00001a15  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_frame  00000234  00000000  00000000  0000218c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_str    0000051b  00000000  00000000  000023c0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_loc    000009d6  00000000  00000000  000028db  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_ranges 000000a8  00000000  00000000  000032b1  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3c 01 	jmp	0x278	; 0x278 <__vector_1>
+   8:	0c 94 65 01 	jmp	0x2ca	; 0x2ca <__vector_2>
+   c:	0c 94 8e 01 	jmp	0x31c	; 0x31c <__vector_3>
+  10:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  14:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  18:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  1c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  20:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  24:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  28:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  2c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  30:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  34:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  38:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  3c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  40:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  44:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  48:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  4c:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+  50:	0c 94 3c 00 	jmp	0x78	; 0x78 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d8 e0       	ldi	r29, 0x08	; 8
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_clear_bss>:
+  60:	20 e0       	ldi	r18, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	01 c0       	rjmp	.+2      	; 0x6a <.do_clear_bss_start>
+
+00000068 <.do_clear_bss_loop>:
+  68:	1d 92       	st	X+, r1
+
+0000006a <.do_clear_bss_start>:
+  6a:	a7 36       	cpi	r26, 0x67	; 103
+  6c:	b2 07       	cpc	r27, r18
+  6e:	e1 f7       	brne	.-8      	; 0x68 <.do_clear_bss_loop>
+  70:	0e 94 fb 01 	call	0x3f6	; 0x3f6 <main>
+  74:	0c 94 1e 02 	jmp	0x43c	; 0x43c <_exit>
+
+00000078 <__bad_interrupt>:
+  78:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000007c <DIO_Init>:
+			{
+				DDRD_REG = 0X00;
+			}
+			else
+			{
+				DDRC_REG |= state;
+  7c:	87 e0       	ldi	r24, 0x07	; 7
+  7e:	8a bb       	out	0x1a, r24	; 26
+  80:	17 ba       	out	0x17, r1	; 23
+  82:	14 ba       	out	0x14, r1	; 20
+  84:	11 ba       	out	0x11, r1	; 17
+  86:	1b ba       	out	0x1b, r1	; 27
+  88:	18 ba       	out	0x18, r1	; 24
+  8a:	15 ba       	out	0x15, r1	; 21
+  8c:	12 ba       	out	0x12, r1	; 18
+  8e:	08 95       	ret
+
+00000090 <DIO_SetPinValue>:
+ *					- else 	clear that pin
+ */
+void DIO_SetPinValue(uint8 portno, uint8 pinno, uint8 value)
+{
+	/* check which port */
+	switch (portno)
+  90:	81 30       	cpi	r24, 0x01	; 1
+  92:	01 f1       	breq	.+64     	; 0xd4 <DIO_SetPinValue+0x44>
+  94:	30 f0       	brcs	.+12     	; 0xa2 <DIO_SetPinValue+0x12>
+  96:	82 30       	cpi	r24, 0x02	; 2
+  98:	b1 f1       	breq	.+108    	; 0x106 <DIO_SetPinValue+0x76>
+  9a:	83 30       	cpi	r24, 0x03	; 3
+  9c:	09 f4       	brne	.+2      	; 0xa0 <DIO_SetPinValue+0x10>
+  9e:	4c c0       	rjmp	.+152    	; 0x138 <DIO_SetPinValue+0xa8>
+  a0:	08 95       	ret
+	{
+		case PORTA:
+			/* check if value is high */
+			if (value == HIGH)
+  a2:	41 30       	cpi	r20, 0x01	; 1
+  a4:	59 f4       	brne	.+22     	; 0xbc <DIO_SetPinValue+0x2c>
+			{
+				SET_BIT(PORTA_REG, pinno);	
+  a6:	2b b3       	in	r18, 0x1b	; 27
+  a8:	81 e0       	ldi	r24, 0x01	; 1
+  aa:	90 e0       	ldi	r25, 0x00	; 0
+  ac:	02 c0       	rjmp	.+4      	; 0xb2 <DIO_SetPinValue+0x22>
+  ae:	88 0f       	add	r24, r24
+  b0:	99 1f       	adc	r25, r25
+  b2:	6a 95       	dec	r22
+  b4:	e2 f7       	brpl	.-8      	; 0xae <DIO_SetPinValue+0x1e>
+  b6:	82 2b       	or	r24, r18
+  b8:	8b bb       	out	0x1b, r24	; 27
+  ba:	08 95       	ret
+			}
+			else
+			{
+				CLR_BIT(PORTA_REG, pinno);
+  bc:	2b b3       	in	r18, 0x1b	; 27
+  be:	81 e0       	ldi	r24, 0x01	; 1
+  c0:	90 e0       	ldi	r25, 0x00	; 0
+  c2:	02 c0       	rjmp	.+4      	; 0xc8 <DIO_SetPinValue+0x38>
+  c4:	88 0f       	add	r24, r24
+  c6:	99 1f       	adc	r25, r25
+  c8:	6a 95       	dec	r22
+  ca:	e2 f7       	brpl	.-8      	; 0xc4 <DIO_SetPinValue+0x34>
+  cc:	80 95       	com	r24
+  ce:	82 23       	and	r24, r18
+  d0:	8b bb       	out	0x1b, r24	; 27
+  d2:	08 95       	ret
+			}
+			break;
+		
+		case PORTB:
+			/* check if value is high */
+			if (value == HIGH)
+  d4:	41 30       	cpi	r20, 0x01	; 1
+  d6:	59 f4       	brne	.+22     	; 0xee <DIO_SetPinValue+0x5e>
+			{
+				SET_BIT(PORTB_REG, pinno);
+  d8:	28 b3       	in	r18, 0x18	; 24
+  da:	81 e0       	ldi	r24, 0x01	; 1
+  dc:	90 e0       	ldi	r25, 0x00	; 0
+  de:	02 c0       	rjmp	.+4      	; 0xe4 <DIO_SetPinValue+0x54>
+  e0:	88 0f       	add	r24, r24
+  e2:	99 1f       	adc	r25, r25
+  e4:	6a 95       	dec	r22
+  e6:	e2 f7       	brpl	.-8      	; 0xe0 <DIO_SetPinValue+0x50>
+  e8:	82 2b       	or	r24, r18
+  ea:	88 bb       	out	0x18, r24	; 24
+  ec:	08 95       	ret
+			}
+			else
+			{
+				CLR_BIT(PORTB_REG, pinno);
+  ee:	28 b3       	in	r18, 0x18	; 24
+  f0:	81 e0       	ldi	r24, 0x01	; 1
+  f2:	90 e0       	ldi	r25, 0x00	; 0
+  f4:	02 c0       	rjmp	.+4      	; 0xfa <DIO_SetPinValue+0x6a>
+  f6:	88 0f       	add	r24, r24
+  f8:	99 1f       	adc	r25, r25
+  fa:	6a 95       	dec	r22
+  fc:	e2 f7       	brpl	.-8      	; 0xf6 <DIO_SetPinValue+0x66>
+  fe:	80 95       	com	r24
+ 100:	82 23       	and	r24, r18
+ 102:	88 bb       	out	0x18, r24	; 24
+ 104:	08 95       	ret
+			}
+			break;
+		
+		case PORTC:
+			/* check if value is high */
+			if (value == HIGH)
+ 106:	41 30       	cpi	r20, 0x01	; 1
+ 108:	59 f4       	brne	.+22     	; 0x120 <DIO_SetPinValue+0x90>
+			{
+				SET_BIT(PORTC_REG, pinno);
+ 10a:	25 b3       	in	r18, 0x15	; 21
+ 10c:	81 e0       	ldi	r24, 0x01	; 1
+ 10e:	90 e0       	ldi	r25, 0x00	; 0
+ 110:	02 c0       	rjmp	.+4      	; 0x116 <DIO_SetPinValue+0x86>
+ 112:	88 0f       	add	r24, r24
+ 114:	99 1f       	adc	r25, r25
+ 116:	6a 95       	dec	r22
+ 118:	e2 f7       	brpl	.-8      	; 0x112 <DIO_SetPinValue+0x82>
+ 11a:	82 2b       	or	r24, r18
+ 11c:	85 bb       	out	0x15, r24	; 21
+ 11e:	08 95       	ret
+			}
+			else
+			{
+				CLR_BIT(PORTC_REG, pinno);
+ 120:	25 b3       	in	r18, 0x15	; 21
+ 122:	81 e0       	ldi	r24, 0x01	; 1
+ 124:	90 e0       	ldi	r25, 0x00	; 0
+ 126:	02 c0       	rjmp	.+4      	; 0x12c <DIO_SetPinValue+0x9c>
+ 128:	88 0f       	add	r24, r24
+ 12a:	99 1f       	adc	r25, r25
+ 12c:	6a 95       	dec	r22
+ 12e:	e2 f7       	brpl	.-8      	; 0x128 <DIO_SetPinValue+0x98>
+ 130:	80 95       	com	r24
+ 132:	82 23       	and	r24, r18
+ 134:	85 bb       	out	0x15, r24	; 21
+ 136:	08 95       	ret
+			}
+			break;
+			
+		case PORTD:
+			/* check if value is high */
+			if (value == HIGH)
+ 138:	41 30       	cpi	r20, 0x01	; 1
+ 13a:	59 f4       	brne	.+22     	; 0x152 <DIO_SetPinValue+0xc2>
+			{
+				SET_BIT(PORTD_REG, pinno);
+ 13c:	22 b3       	in	r18, 0x12	; 18
+ 13e:	81 e0       	ldi	r24, 0x01	; 1
+ 140:	90 e0       	ldi	r25, 0x00	; 0
+ 142:	02 c0       	rjmp	.+4      	; 0x148 <DIO_SetPinValue+0xb8>
+ 144:	88 0f       	add	r24, r24
+ 146:	99 1f       	adc	r25, r25
+ 148:	6a 95       	dec	r22
+ 14a:	e2 f7       	brpl	.-8      	; 0x144 <DIO_SetPinValue+0xb4>
+ 14c:	82 2b       	or	r24, r18
+ 14e:	82 bb       	out	0x12, r24	; 18
+ 150:	08 95       	ret
+			}
+			else
+			{
+				CLR_BIT(PORTD_REG, pinno);
+ 152:	22 b3       	in	r18, 0x12	; 18
+ 154:	81 e0       	ldi	r24, 0x01	; 1
+ 156:	90 e0       	ldi	r25, 0x00	; 0
+ 158:	02 c0       	rjmp	.+4      	; 0x15e <DIO_SetPinValue+0xce>
+ 15a:	88 0f       	add	r24, r24
+ 15c:	99 1f       	adc	r25, r25
+ 15e:	6a 95       	dec	r22
+ 160:	e2 f7       	brpl	.-8      	; 0x15a <DIO_SetPinValue+0xca>
+ 162:	80 95       	com	r24
+ 164:	82 23       	and	r24, r18
+ 166:	82 bb       	out	0x12, r24	; 18
+ 168:	08 95       	ret
+
+0000016a <EX_InturruptEnable>:
+{
+	switch(ex_int)
+	{
+		case EX_INT0:	CLR_BIT(GICR, INT0);	break;
+		case EX_INT1:	CLR_BIT(GICR, INT1);	break;
+		case EX_INT2:	CLR_BIT(GICR, INT2);	break;
+ 16a:	81 30       	cpi	r24, 0x01	; 1
+ 16c:	41 f0       	breq	.+16     	; 0x17e <EX_InturruptEnable+0x14>
+ 16e:	18 f0       	brcs	.+6      	; 0x176 <EX_InturruptEnable+0xc>
+ 170:	82 30       	cpi	r24, 0x02	; 2
+ 172:	49 f0       	breq	.+18     	; 0x186 <EX_InturruptEnable+0x1c>
+ 174:	08 95       	ret
+ 176:	8b b7       	in	r24, 0x3b	; 59
+ 178:	80 64       	ori	r24, 0x40	; 64
+ 17a:	8b bf       	out	0x3b, r24	; 59
+ 17c:	08 95       	ret
+ 17e:	8b b7       	in	r24, 0x3b	; 59
+ 180:	80 68       	ori	r24, 0x80	; 128
+ 182:	8b bf       	out	0x3b, r24	; 59
+ 184:	08 95       	ret
+ 186:	8b b7       	in	r24, 0x3b	; 59
+ 188:	80 62       	ori	r24, 0x20	; 32
+ 18a:	8b bf       	out	0x3b, r24	; 59
+ 18c:	08 95       	ret
+
+0000018e <EX_InturruptEdgeTriggering>:
+
+//function to set edge triggering mode, the input for this function is EX_InturruptSourceType enum and Edge_TriggerType
+//ex) EX_InturruptEdgeTriggering(EX_INT0, FALLING_Edge); to control INT0 with falling edge
+void EX_InturruptEdgeTriggering(EX_InturruptSourceType ex_int, Edge_TriggerType edgeType)
+{
+	switch(ex_int)
+ 18e:	81 30       	cpi	r24, 0x01	; 1
+ 190:	49 f1       	breq	.+82     	; 0x1e4 <EX_InturruptEdgeTriggering+0x56>
+ 192:	20 f0       	brcs	.+8      	; 0x19c <EX_InturruptEdgeTriggering+0xe>
+ 194:	82 30       	cpi	r24, 0x02	; 2
+ 196:	09 f4       	brne	.+2      	; 0x19a <EX_InturruptEdgeTriggering+0xc>
+ 198:	49 c0       	rjmp	.+146    	; 0x22c <EX_InturruptEdgeTriggering+0x9e>
+ 19a:	08 95       	ret
+	{
+		case EX_INT0:
+		switch(edgeType)
+ 19c:	61 30       	cpi	r22, 0x01	; 1
+ 19e:	69 f0       	breq	.+26     	; 0x1ba <EX_InturruptEdgeTriggering+0x2c>
+ 1a0:	28 f0       	brcs	.+10     	; 0x1ac <EX_InturruptEdgeTriggering+0x1e>
+ 1a2:	62 30       	cpi	r22, 0x02	; 2
+ 1a4:	89 f0       	breq	.+34     	; 0x1c8 <EX_InturruptEdgeTriggering+0x3a>
+ 1a6:	63 30       	cpi	r22, 0x03	; 3
+ 1a8:	b1 f0       	breq	.+44     	; 0x1d6 <EX_InturruptEdgeTriggering+0x48>
+ 1aa:	08 95       	ret
+		{
+			case LOW_LEVEL:		CLR_BIT(MCUCR, ISC00);
+ 1ac:	85 b7       	in	r24, 0x35	; 53
+ 1ae:	8e 7f       	andi	r24, 0xFE	; 254
+ 1b0:	85 bf       	out	0x35, r24	; 53
+								CLR_BIT(MCUCR, ISC01);
+ 1b2:	85 b7       	in	r24, 0x35	; 53
+ 1b4:	8d 7f       	andi	r24, 0xFD	; 253
+ 1b6:	85 bf       	out	0x35, r24	; 53
+								break;
+ 1b8:	08 95       	ret
+			case ANY_CHANGE:	SET_BIT(MCUCR, ISC00);
+ 1ba:	85 b7       	in	r24, 0x35	; 53
+ 1bc:	81 60       	ori	r24, 0x01	; 1
+ 1be:	85 bf       	out	0x35, r24	; 53
+								CLR_BIT(MCUCR, ISC01);
+ 1c0:	85 b7       	in	r24, 0x35	; 53
+ 1c2:	8d 7f       	andi	r24, 0xFD	; 253
+ 1c4:	85 bf       	out	0x35, r24	; 53
+								break;
+ 1c6:	08 95       	ret
+			case FALLING_Edge:	CLR_BIT(MCUCR, ISC00);
+ 1c8:	85 b7       	in	r24, 0x35	; 53
+ 1ca:	8e 7f       	andi	r24, 0xFE	; 254
+ 1cc:	85 bf       	out	0x35, r24	; 53
+								SET_BIT(MCUCR, ISC01);
+ 1ce:	85 b7       	in	r24, 0x35	; 53
+ 1d0:	82 60       	ori	r24, 0x02	; 2
+ 1d2:	85 bf       	out	0x35, r24	; 53
+								break;
+ 1d4:	08 95       	ret
+			case RISING_Edge:	SET_BIT(MCUCR, ISC00);
+ 1d6:	85 b7       	in	r24, 0x35	; 53
+ 1d8:	81 60       	ori	r24, 0x01	; 1
+ 1da:	85 bf       	out	0x35, r24	; 53
+								SET_BIT(MCUCR, ISC01);
+ 1dc:	85 b7       	in	r24, 0x35	; 53
+ 1de:	82 60       	ori	r24, 0x02	; 2
+ 1e0:	85 bf       	out	0x35, r24	; 53
+								break;					
+ 1e2:	08 95       	ret
+		}
+		break;
+		
+		case EX_INT1:
+		switch(edgeType)
+ 1e4:	61 30       	cpi	r22, 0x01	; 1
+ 1e6:	69 f0       	breq	.+26     	; 0x202 <EX_InturruptEdgeTriggering+0x74>
+ 1e8:	28 f0       	brcs	.+10     	; 0x1f4 <EX_InturruptEdgeTriggering+0x66>
+ 1ea:	62 30       	cpi	r22, 0x02	; 2
+ 1ec:	89 f0       	breq	.+34     	; 0x210 <EX_InturruptEdgeTriggering+0x82>
+ 1ee:	63 30       	cpi	r22, 0x03	; 3
+ 1f0:	b1 f0       	breq	.+44     	; 0x21e <EX_InturruptEdgeTriggering+0x90>
+ 1f2:	08 95       	ret
+		{
+			case LOW_LEVEL:		CLR_BIT(MCUCR, ISC10);
+ 1f4:	85 b7       	in	r24, 0x35	; 53
+ 1f6:	8b 7f       	andi	r24, 0xFB	; 251
+ 1f8:	85 bf       	out	0x35, r24	; 53
+								CLR_BIT(MCUCR, ISC11);
+ 1fa:	85 b7       	in	r24, 0x35	; 53
+ 1fc:	87 7f       	andi	r24, 0xF7	; 247
+ 1fe:	85 bf       	out	0x35, r24	; 53
+								break;
+ 200:	08 95       	ret
+			case ANY_CHANGE:	SET_BIT(MCUCR, ISC10);
+ 202:	85 b7       	in	r24, 0x35	; 53
+ 204:	84 60       	ori	r24, 0x04	; 4
+ 206:	85 bf       	out	0x35, r24	; 53
+								CLR_BIT(MCUCR, ISC11);
+ 208:	85 b7       	in	r24, 0x35	; 53
+ 20a:	87 7f       	andi	r24, 0xF7	; 247
+ 20c:	85 bf       	out	0x35, r24	; 53
+								break;
+ 20e:	08 95       	ret
+			case FALLING_Edge:	CLR_BIT(MCUCR, ISC10);
+ 210:	85 b7       	in	r24, 0x35	; 53
+ 212:	8b 7f       	andi	r24, 0xFB	; 251
+ 214:	85 bf       	out	0x35, r24	; 53
+								SET_BIT(MCUCR, ISC11);
+ 216:	85 b7       	in	r24, 0x35	; 53
+ 218:	88 60       	ori	r24, 0x08	; 8
+ 21a:	85 bf       	out	0x35, r24	; 53
+								break;
+ 21c:	08 95       	ret
+			case RISING_Edge:	SET_BIT(MCUCR, ISC10);
+ 21e:	85 b7       	in	r24, 0x35	; 53
+ 220:	84 60       	ori	r24, 0x04	; 4
+ 222:	85 bf       	out	0x35, r24	; 53
+								SET_BIT(MCUCR, ISC11);
+ 224:	85 b7       	in	r24, 0x35	; 53
+ 226:	88 60       	ori	r24, 0x08	; 8
+ 228:	85 bf       	out	0x35, r24	; 53
+								break;
+ 22a:	08 95       	ret
+		}
+		break;
+		case EX_INT2:
+		switch(edgeType)
+ 22c:	62 30       	cpi	r22, 0x02	; 2
+ 22e:	19 f0       	breq	.+6      	; 0x236 <EX_InturruptEdgeTriggering+0xa8>
+ 230:	63 30       	cpi	r22, 0x03	; 3
+ 232:	29 f0       	breq	.+10     	; 0x23e <EX_InturruptEdgeTriggering+0xb0>
+ 234:	08 c0       	rjmp	.+16     	; 0x246 <EX_InturruptEdgeTriggering+0xb8>
+		{
+			case FALLING_Edge:	CLR_BIT(MCUCSR, ISC2);		break;
+ 236:	84 b7       	in	r24, 0x34	; 52
+ 238:	8f 7b       	andi	r24, 0xBF	; 191
+ 23a:	84 bf       	out	0x34, r24	; 52
+ 23c:	08 95       	ret
+			case RISING_Edge:	SET_BIT(MCUCSR, ISC2);		break;
+ 23e:	84 b7       	in	r24, 0x34	; 52
+ 240:	80 64       	ori	r24, 0x40	; 64
+ 242:	84 bf       	out	0x34, r24	; 52
+ 244:	08 95       	ret
+			default:			CLR_BIT(MCUCSR, ISC2);		break;
+ 246:	84 b7       	in	r24, 0x34	; 52
+ 248:	8f 7b       	andi	r24, 0xBF	; 191
+ 24a:	84 bf       	out	0x34, r24	; 52
+ 24c:	08 95       	ret
+
+0000024e <SetCallBackFunction>:
+}
+
+//call back function
+void SetCallBackFunction(EX_InturruptSourceType ex_int, void (*ptrtofunc)(void))
+{
+	switch(ex_int)
+ 24e:	81 30       	cpi	r24, 0x01	; 1
+ 250:	49 f0       	breq	.+18     	; 0x264 <SetCallBackFunction+0x16>
+ 252:	18 f0       	brcs	.+6      	; 0x25a <SetCallBackFunction+0xc>
+ 254:	82 30       	cpi	r24, 0x02	; 2
+ 256:	59 f0       	breq	.+22     	; 0x26e <SetCallBackFunction+0x20>
+ 258:	08 95       	ret
+	{
+		case EX_INT0:	INT0_ptr = ptrtofunc;	break;
+ 25a:	70 93 65 00 	sts	0x0065, r23	; 0x800065 <INT0_ptr+0x1>
+ 25e:	60 93 64 00 	sts	0x0064, r22	; 0x800064 <INT0_ptr>
+ 262:	08 95       	ret
+		case EX_INT1:	INT1_ptr = ptrtofunc;	break;
+ 264:	70 93 63 00 	sts	0x0063, r23	; 0x800063 <INT1_ptr+0x1>
+ 268:	60 93 62 00 	sts	0x0062, r22	; 0x800062 <INT1_ptr>
+ 26c:	08 95       	ret
+		case EX_INT2:	INT2_ptr = ptrtofunc;	break;
+ 26e:	70 93 61 00 	sts	0x0061, r23	; 0x800061 <_edata+0x1>
+ 272:	60 93 60 00 	sts	0x0060, r22	; 0x800060 <_edata>
+ 276:	08 95       	ret
+
+00000278 <__vector_1>:
+	}
+}
+
+ISR(INT0_vect)
+{
+ 278:	1f 92       	push	r1
+ 27a:	0f 92       	push	r0
+ 27c:	0f b6       	in	r0, 0x3f	; 63
+ 27e:	0f 92       	push	r0
+ 280:	11 24       	eor	r1, r1
+ 282:	2f 93       	push	r18
+ 284:	3f 93       	push	r19
+ 286:	4f 93       	push	r20
+ 288:	5f 93       	push	r21
+ 28a:	6f 93       	push	r22
+ 28c:	7f 93       	push	r23
+ 28e:	8f 93       	push	r24
+ 290:	9f 93       	push	r25
+ 292:	af 93       	push	r26
+ 294:	bf 93       	push	r27
+ 296:	ef 93       	push	r30
+ 298:	ff 93       	push	r31
+	if (INT0_ptr != NULL)
+ 29a:	e0 91 64 00 	lds	r30, 0x0064	; 0x800064 <INT0_ptr>
+ 29e:	f0 91 65 00 	lds	r31, 0x0065	; 0x800065 <INT0_ptr+0x1>
+ 2a2:	30 97       	sbiw	r30, 0x00	; 0
+ 2a4:	09 f0       	breq	.+2      	; 0x2a8 <__vector_1+0x30>
+	{
+		INT0_ptr();
+ 2a6:	09 95       	icall
+	}
+}
+ 2a8:	ff 91       	pop	r31
+ 2aa:	ef 91       	pop	r30
+ 2ac:	bf 91       	pop	r27
+ 2ae:	af 91       	pop	r26
+ 2b0:	9f 91       	pop	r25
+ 2b2:	8f 91       	pop	r24
+ 2b4:	7f 91       	pop	r23
+ 2b6:	6f 91       	pop	r22
+ 2b8:	5f 91       	pop	r21
+ 2ba:	4f 91       	pop	r20
+ 2bc:	3f 91       	pop	r19
+ 2be:	2f 91       	pop	r18
+ 2c0:	0f 90       	pop	r0
+ 2c2:	0f be       	out	0x3f, r0	; 63
+ 2c4:	0f 90       	pop	r0
+ 2c6:	1f 90       	pop	r1
+ 2c8:	18 95       	reti
+
+000002ca <__vector_2>:
+
+ISR(INT1_vect)
+{
+ 2ca:	1f 92       	push	r1
+ 2cc:	0f 92       	push	r0
+ 2ce:	0f b6       	in	r0, 0x3f	; 63
+ 2d0:	0f 92       	push	r0
+ 2d2:	11 24       	eor	r1, r1
+ 2d4:	2f 93       	push	r18
+ 2d6:	3f 93       	push	r19
+ 2d8:	4f 93       	push	r20
+ 2da:	5f 93       	push	r21
+ 2dc:	6f 93       	push	r22
+ 2de:	7f 93       	push	r23
+ 2e0:	8f 93       	push	r24
+ 2e2:	9f 93       	push	r25
+ 2e4:	af 93       	push	r26
+ 2e6:	bf 93       	push	r27
+ 2e8:	ef 93       	push	r30
+ 2ea:	ff 93       	push	r31
+	if (INT1_ptr != NULL)
+ 2ec:	e0 91 62 00 	lds	r30, 0x0062	; 0x800062 <INT1_ptr>
+ 2f0:	f0 91 63 00 	lds	r31, 0x0063	; 0x800063 <INT1_ptr+0x1>
+ 2f4:	30 97       	sbiw	r30, 0x00	; 0
+ 2f6:	09 f0       	breq	.+2      	; 0x2fa <__vector_2+0x30>
+	{
+		INT1_ptr();
+ 2f8:	09 95       	icall
+	}
+}
+ 2fa:	ff 91       	pop	r31
+ 2fc:	ef 91       	pop	r30
+ 2fe:	bf 91       	pop	r27
+ 300:	af 91       	pop	r26
+ 302:	9f 91       	pop	r25
+ 304:	8f 91       	pop	r24
+ 306:	7f 91       	pop	r23
+ 308:	6f 91       	pop	r22
+ 30a:	5f 91       	pop	r21
+ 30c:	4f 91       	pop	r20
+ 30e:	3f 91       	pop	r19
+ 310:	2f 91       	pop	r18
+ 312:	0f 90       	pop	r0
+ 314:	0f be       	out	0x3f, r0	; 63
+ 316:	0f 90       	pop	r0
+ 318:	1f 90       	pop	r1
+ 31a:	18 95       	reti
+
+0000031c <__vector_3>:
+
+ISR(INT2_vect)
+{
+ 31c:	1f 92       	push	r1
+ 31e:	0f 92       	push	r0
+ 320:	0f b6       	in	r0, 0x3f	; 63
+ 322:	0f 92       	push	r0
+ 324:	11 24       	eor	r1, r1
+ 326:	2f 93       	push	r18
+ 328:	3f 93       	push	r19
+ 32a:	4f 93       	push	r20
+ 32c:	5f 93       	push	r21
+ 32e:	6f 93       	push	r22
+ 330:	7f 93       	push	r23
+ 332:	8f 93       	push	r24
+ 334:	9f 93       	push	r25
+ 336:	af 93       	push	r26
+ 338:	bf 93       	push	r27
+ 33a:	ef 93       	push	r30
+ 33c:	ff 93       	push	r31
+	if (INT2_ptr != NULL)
+ 33e:	e0 91 60 00 	lds	r30, 0x0060	; 0x800060 <_edata>
+ 342:	f0 91 61 00 	lds	r31, 0x0061	; 0x800061 <_edata+0x1>
+ 346:	30 97       	sbiw	r30, 0x00	; 0
+ 348:	09 f0       	breq	.+2      	; 0x34c <__vector_3+0x30>
+	{
+		INT2_ptr();
+ 34a:	09 95       	icall
+	}
+}
+ 34c:	ff 91       	pop	r31
+ 34e:	ef 91       	pop	r30
+ 350:	bf 91       	pop	r27
+ 352:	af 91       	pop	r26
+ 354:	9f 91       	pop	r25
+ 356:	8f 91       	pop	r24
+ 358:	7f 91       	pop	r23
+ 35a:	6f 91       	pop	r22
+ 35c:	5f 91       	pop	r21
+ 35e:	4f 91       	pop	r20
+ 360:	3f 91       	pop	r19
+ 362:	2f 91       	pop	r18
+ 364:	0f 90       	pop	r0
+ 366:	0f be       	out	0x3f, r0	; 63
+ 368:	0f 90       	pop	r0
+ 36a:	1f 90       	pop	r1
+ 36c:	18 95       	reti
+
+0000036e <LED_1>:
+}
+
+
+void LED_1 (void)
+{
+	DIO_SetPinValue(PORTA, PIN0, HIGH);
+ 36e:	41 e0       	ldi	r20, 0x01	; 1
+ 370:	60 e0       	ldi	r22, 0x00	; 0
+ 372:	80 e0       	ldi	r24, 0x00	; 0
+ 374:	0e 94 48 00 	call	0x90	; 0x90 <DIO_SetPinValue>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 378:	2f ef       	ldi	r18, 0xFF	; 255
+ 37a:	84 e3       	ldi	r24, 0x34	; 52
+ 37c:	9c e0       	ldi	r25, 0x0C	; 12
+ 37e:	21 50       	subi	r18, 0x01	; 1
+ 380:	80 40       	sbci	r24, 0x00	; 0
+ 382:	90 40       	sbci	r25, 0x00	; 0
+ 384:	e1 f7       	brne	.-8      	; 0x37e <LED_1+0x10>
+ 386:	00 c0       	rjmp	.+0      	; 0x388 <LED_1+0x1a>
+ 388:	00 00       	nop
+	_delay_ms(500);
+	DIO_SetPinValue(PORTA, PIN0, LOW);
+ 38a:	40 e0       	ldi	r20, 0x00	; 0
+ 38c:	60 e0       	ldi	r22, 0x00	; 0
+ 38e:	80 e0       	ldi	r24, 0x00	; 0
+ 390:	0e 94 48 00 	call	0x90	; 0x90 <DIO_SetPinValue>
+	i = 1;
+ 394:	81 e0       	ldi	r24, 0x01	; 1
+ 396:	80 93 66 00 	sts	0x0066, r24	; 0x800066 <i>
+ 39a:	08 95       	ret
+
+0000039c <LED_2>:
+}
+
+void LED_2 (void)
+{
+	DIO_SetPinValue(PORTA, PIN1, HIGH);
+ 39c:	41 e0       	ldi	r20, 0x01	; 1
+ 39e:	61 e0       	ldi	r22, 0x01	; 1
+ 3a0:	80 e0       	ldi	r24, 0x00	; 0
+ 3a2:	0e 94 48 00 	call	0x90	; 0x90 <DIO_SetPinValue>
+ 3a6:	2f ef       	ldi	r18, 0xFF	; 255
+ 3a8:	84 e3       	ldi	r24, 0x34	; 52
+ 3aa:	9c e0       	ldi	r25, 0x0C	; 12
+ 3ac:	21 50       	subi	r18, 0x01	; 1
+ 3ae:	80 40       	sbci	r24, 0x00	; 0
+ 3b0:	90 40       	sbci	r25, 0x00	; 0
+ 3b2:	e1 f7       	brne	.-8      	; 0x3ac <LED_2+0x10>
+ 3b4:	00 c0       	rjmp	.+0      	; 0x3b6 <LED_2+0x1a>
+ 3b6:	00 00       	nop
+	_delay_ms(500);
+	DIO_SetPinValue(PORTA, PIN1, LOW);
+ 3b8:	40 e0       	ldi	r20, 0x00	; 0
+ 3ba:	61 e0       	ldi	r22, 0x01	; 1
+ 3bc:	80 e0       	ldi	r24, 0x00	; 0
+ 3be:	0e 94 48 00 	call	0x90	; 0x90 <DIO_SetPinValue>
+	i = 2;
+ 3c2:	82 e0       	ldi	r24, 0x02	; 2
+ 3c4:	80 93 66 00 	sts	0x0066, r24	; 0x800066 <i>
+ 3c8:	08 95       	ret
+
+000003ca <LED_3>:
+}
+
+void LED_3 (void)
+{
+	DIO_SetPinValue(PORTA, PIN2, HIGH);
+ 3ca:	41 e0       	ldi	r20, 0x01	; 1
+ 3cc:	62 e0       	ldi	r22, 0x02	; 2
+ 3ce:	80 e0       	ldi	r24, 0x00	; 0
+ 3d0:	0e 94 48 00 	call	0x90	; 0x90 <DIO_SetPinValue>
+ 3d4:	2f ef       	ldi	r18, 0xFF	; 255
+ 3d6:	84 e3       	ldi	r24, 0x34	; 52
+ 3d8:	9c e0       	ldi	r25, 0x0C	; 12
+ 3da:	21 50       	subi	r18, 0x01	; 1
+ 3dc:	80 40       	sbci	r24, 0x00	; 0
+ 3de:	90 40       	sbci	r25, 0x00	; 0
+ 3e0:	e1 f7       	brne	.-8      	; 0x3da <LED_3+0x10>
+ 3e2:	00 c0       	rjmp	.+0      	; 0x3e4 <LED_3+0x1a>
+ 3e4:	00 00       	nop
+	_delay_ms(500);
+	DIO_SetPinValue(PORTA, PIN2, LOW);
+ 3e6:	40 e0       	ldi	r20, 0x00	; 0
+ 3e8:	62 e0       	ldi	r22, 0x02	; 2
+ 3ea:	80 e0       	ldi	r24, 0x00	; 0
+ 3ec:	0e 94 48 00 	call	0x90	; 0x90 <DIO_SetPinValue>
+	i = 0;
+ 3f0:	10 92 66 00 	sts	0x0066, r1	; 0x800066 <i>
+ 3f4:	08 95       	ret
+
+000003f6 <main>:
+
+
+int main(void)
+{
+	//set global interrupt enable
+	sei();
+ 3f6:	78 94       	sei
+	DIO_Init();
+ 3f8:	0e 94 3e 00 	call	0x7c	; 0x7c <DIO_Init>
+	
+	EX_InturruptEdgeTriggering(EX_INT0, FALLING_Edge);
+ 3fc:	62 e0       	ldi	r22, 0x02	; 2
+ 3fe:	80 e0       	ldi	r24, 0x00	; 0
+ 400:	0e 94 c7 00 	call	0x18e	; 0x18e <EX_InturruptEdgeTriggering>
+	
+	EX_InturruptEnable(EX_INT0);
+ 404:	80 e0       	ldi	r24, 0x00	; 0
+ 406:	0e 94 b5 00 	call	0x16a	; 0x16a <EX_InturruptEnable>
+	
+    while (1) 
+    {
+		if (i == 0)
+ 40a:	80 91 66 00 	lds	r24, 0x0066	; 0x800066 <i>
+ 40e:	81 11       	cpse	r24, r1
+ 410:	05 c0       	rjmp	.+10     	; 0x41c <__LOCK_REGION_LENGTH__+0x1c>
+			SetCallBackFunction(EX_INT0, LED_1);
+ 412:	67 eb       	ldi	r22, 0xB7	; 183
+ 414:	71 e0       	ldi	r23, 0x01	; 1
+ 416:	0e 94 27 01 	call	0x24e	; 0x24e <SetCallBackFunction>
+ 41a:	f7 cf       	rjmp	.-18     	; 0x40a <__LOCK_REGION_LENGTH__+0xa>
+		else if (i == 1)
+ 41c:	81 30       	cpi	r24, 0x01	; 1
+ 41e:	31 f4       	brne	.+12     	; 0x42c <__LOCK_REGION_LENGTH__+0x2c>
+			SetCallBackFunction(EX_INT0, LED_2);
+ 420:	6e ec       	ldi	r22, 0xCE	; 206
+ 422:	71 e0       	ldi	r23, 0x01	; 1
+ 424:	80 e0       	ldi	r24, 0x00	; 0
+ 426:	0e 94 27 01 	call	0x24e	; 0x24e <SetCallBackFunction>
+ 42a:	ef cf       	rjmp	.-34     	; 0x40a <__LOCK_REGION_LENGTH__+0xa>
+		else if (i == 2)
+ 42c:	82 30       	cpi	r24, 0x02	; 2
+ 42e:	69 f7       	brne	.-38     	; 0x40a <__LOCK_REGION_LENGTH__+0xa>
+			SetCallBackFunction(EX_INT0, LED_3);
+ 430:	65 ee       	ldi	r22, 0xE5	; 229
+ 432:	71 e0       	ldi	r23, 0x01	; 1
+ 434:	80 e0       	ldi	r24, 0x00	; 0
+ 436:	0e 94 27 01 	call	0x24e	; 0x24e <SetCallBackFunction>
+ 43a:	e7 cf       	rjmp	.-50     	; 0x40a <__LOCK_REGION_LENGTH__+0xa>
+
+0000043c <_exit>:
+ 43c:	f8 94       	cli
+
+0000043e <__stop_program>:
+ 43e:	ff cf       	rjmp	.-2      	; 0x43e <__stop_program>
